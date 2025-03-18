@@ -19,7 +19,7 @@ app.use('/api/users', UserRoutes);
 
 
 app.get("/", (req, res) => {
-    res.send("🚀 Welcome to the Express API---------------------------------------newwwwwww");
+    res.send("🚀 Welcome to the Express API----------------everything-----------------------newwwwwww");
   });
 
 
