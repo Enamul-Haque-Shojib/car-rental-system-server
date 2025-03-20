@@ -5,6 +5,7 @@ import cors from 'cors';
 
 import { UserRoutes } from './app/Modules/User/User.route';
 import cookieParser from 'cookie-parser';
+import { CarRoutes } from './app/Modules/Car/Car.routes';
 
 const app: Application = express();
 
@@ -15,12 +16,14 @@ app.use(cookieParser());
 
 
 app.use('/api/users', UserRoutes);
+app.use('/api/cars', CarRoutes);
 
 
 
 app.get("/", (req, res) => {
-    res.send("🚀 Welcome to the Express API----------------everything-----------------------newwwwwww");
+    res.send("🚀 Welcome to the Express API----------------everything- main brach----------------------newwwwwww");
   });
+
 
 
 
