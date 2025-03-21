@@ -27,7 +27,7 @@ const featuresSchema = new Schema<TFetures>({
     type: Boolean,
     required: true,
   },
-})
+},{ _id: false })
 
 const carSchema = new Schema<TCar>({
   email: { 
