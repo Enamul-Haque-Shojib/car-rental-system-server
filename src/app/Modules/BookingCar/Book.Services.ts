@@ -3,8 +3,6 @@ import { BookingCar } from "./Book.model";
 import { TBookingCar } from "./Book.type";
 
 
-
-
 const addBookingCarIntoDB = async (payload: TBookingCar) => {
     // Update car availability
    

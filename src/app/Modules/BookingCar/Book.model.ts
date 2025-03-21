@@ -22,6 +22,14 @@ const bookingCarSchema = new Schema<TBookingCar>({
     type: String, 
     required: true
    },
+   pickUpDate: { 
+    type: Date, 
+    default: new Date()
+   },
+   dropOffDate: { 
+    type: String, 
+    required: true
+   },
    RentalDuration: { 
     type: Number, 
     required: true
