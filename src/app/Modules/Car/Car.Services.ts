@@ -10,21 +10,22 @@ const result = await Car.create(payload);
 
 };
 const updateCarIntoDB = async (id: string, payload: Partial<TCar>) => {
+    console.log(payload)
+const result = await Car.findByIdAndUpdate(id, payload,{new: true});
 
-const result = await Car.findByIdAndUpdate({id, payload},{new: true});
     return result;
 
 };
 
 const getAllCarsIntoDB = async () => {
-
+  
 const result = await Car.find();
     return result;
 
 };
 const getOneCarIntoDB = async (id: string) => {
 
-const result = await Car.findOne({id});
+const result = await Car.findOne({_id:id});
     return result;
 
 };

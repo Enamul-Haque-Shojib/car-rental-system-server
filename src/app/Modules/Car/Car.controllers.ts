@@ -33,7 +33,7 @@ import { CarServices } from "./Car.Services";
   }
 };
  const getAllCars = async (req: Request, res: Response, next: NextFunction) => {
-  
+
   try {
     
     const result = await CarServices.getAllCarsIntoDB();
