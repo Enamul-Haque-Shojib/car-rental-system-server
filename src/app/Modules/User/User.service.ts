@@ -18,6 +18,8 @@ const registerUserIntoDB = async (email: string, payload: TUser) => {
     return result;
   };
 
+
+  
  export const UserServices = {
     registerUserIntoDB
   }

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
 
+import { generateToken } from "../../utils/generateToken";
 import { User } from "./User.model";
 import { UserServices } from "./User.service";
 
@@ -20,47 +20,53 @@ import { UserServices } from "./User.service";
   }
 };
 
- const login = async (req: Request, res: Response, next: NextFunction) => {
- 
+
+
+
+
+export const login = async (req: Request, res: Response,next: NextFunction) => {
   try {
-    const { email } = req.body;
-    const user = await User.findOne({ email });
-   
+    const { email, name, photoUrl } = req.body;
+
+    if (!email) return res.status(400).json({ message: "Email is required" });
+
+    
+    let user = await User.findOne({ email });
+
     if (!user) {
-      return res.status(400).send({ error: "Invalid credentials",message: "Invalid credentials" });
+      user = await User.create({
+        name: name ,
+        email,
+        photoURL: photoUrl ,
+      });
     }
 
-    // const token = jwt.sign({ email: user.email, id: user._id, role: user.role },"55c2c1610f804162b44a9a0a5bd12169e8260598563255383e174597974eac67e779e6137ac150da3bacca87bff743273579fa73ad9daa2867f1e6980bbdf1", { expiresIn: "1d" });
+    
+    const jwtToken = generateToken(user._id.toString(),user.email,user.role);
 
-  //   // Store token in cookie
-  //   // res.cookie("token", token, {
-  //   //   httpOnly: true,
-  //   //   secure: process.env.NODE_ENV === 'production',
-  //   //   sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-  //   // });
+    // Set JWT  cookie
+    res.cookie("Token", jwtToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite:process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
 
-  //   res.send({ message: "Login successful" });
+    res.json({ message: "Login successful", user });
   } catch (error) {
     next(error)
-    // res.status(500).send({ error: "Login failed" });
+    res.status(500).send({ message: "Server error",  });
   }
 };
 
- const logout = async (req: Request, res: Response,) => {
-  res
-    .clearCookie('token', {
-      maxAge: 0,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-    })
-    .send({ success: true })
-
-}
-
+// Logout
+export const logoutUser = (req: Request, res: Response) => {
+  res.clearCookie("Token");
+  res.json({ message: "Logged out successfully" });
+};
 
 
 export const UserController = {
   registerUser,
-  login,
-  logout
+  
 }
