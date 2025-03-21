@@ -18,7 +18,7 @@ app.use(cookieParser());
 
 
 
-app.use('/api/users', UserRoutes);
+app.use('/api/auth', UserRoutes);
 app.use('/api/cars', CarRoutes);
 app.use('/api/bookings', BookingRoutes);
 

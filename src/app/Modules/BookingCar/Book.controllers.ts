@@ -7,11 +7,26 @@ import { BookingServices } from "./Book.Services";
   
   try {
     
-    const result = await BookingServices.addBookingCarIntoDB(req.body);
+    const result = await BookingServices.approvedBookingCarIntoDB(req.params.id, req.body);
 
     res.status(200).json({
       success: true,
       message: "Car Booked successfully.",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+ const approvedBookingCar = async (req: Request, res: Response, next: NextFunction) => {
+  
+  try {
+    
+    const result = await BookingServices.approvedBookingCarIntoDB(req.params.id, req.body);
+
+    res.status(200).json({
+      success: true,
+      message: "Car Book approved successfully.",
       data: result,
     });
   } catch (error) {
@@ -69,6 +84,7 @@ import { BookingServices } from "./Book.Services";
 
 export const BookingControllers = {
   addBookingCar,
+  approvedBookingCar,
     updateBookingCar,
     getAllBookingCars,
     deleteBookingCar

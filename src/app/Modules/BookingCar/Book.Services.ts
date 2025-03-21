@@ -4,10 +4,27 @@ import { TBookingCar } from "./Book.type";
 
 
 const addBookingCarIntoDB = async (payload: TBookingCar) => {
-    // Update car availability
+
+    const result = await BookingCar.create(payload);
+    return result;
+};
+
+const approvedBookingCarIntoDB = async (id: string, payload: {registrationNumber: string}) => {
+    
    
+    const updatedBookingCar = await BookingCar.findByIdAndUpdate(
+        id,
+        { status: 'Approved' },
+        { new: true }
+    );
+   
+    if (!updatedBookingCar) {
+        throw new Error("Booking Car not found or unable to update status.");
+    }
+   
+
     const updatedCar = await Car.findOneAndUpdate(
-        { registrationNumber: payload.carNumber },
+        { registrationNumber: payload.registrationNumber },
         { availability: false },
         { new: true }
     );
@@ -15,9 +32,7 @@ const addBookingCarIntoDB = async (payload: TBookingCar) => {
     if (!updatedCar) {
         throw new Error("Car not found or unable to update availability.");
     }
-
-    const result = await BookingCar.create(payload);
-    return result;
+    return null;
 };
 
 const updateBookingCarIntoDB = async (id: string, payload: Partial<TBookingCar>) => {
@@ -45,6 +60,7 @@ const result = await BookingCar.findByIdAndDelete(id);
 
  export const BookingServices = {
     addBookingCarIntoDB,
+    approvedBookingCarIntoDB,
     updateBookingCarIntoDB,
     getAllBookingCarsIntoDB,
 

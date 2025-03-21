@@ -4,7 +4,12 @@ import { TBookingCar } from './Book.type';
 
 
 const bookingCarSchema = new Schema<TBookingCar>({
-  email: { 
+  
+  userEmail: { 
+    type:  String, 
+    required: true, 
+  },
+  ownerEmail: { 
     type:  String, 
     required: true, 
   },
@@ -44,7 +49,7 @@ const bookingCarSchema = new Schema<TBookingCar>({
    },
    status: { 
     type: String, 
-    enum: ['Pending' ,'Confirmed' , 'Canceled' , 'Completed'],
+    enum: ['Pending' ,'Canceled' , 'Approved'],
     required: true,
     default: "Pending"
    }

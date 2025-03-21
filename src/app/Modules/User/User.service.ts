@@ -18,6 +18,31 @@ const registerUserIntoDB = async (email: string, payload: TUser) => {
     return result;
   };
 
+
+  
+
+const loginIntoDB = async (payload: TUser) => {
+    
+  const { email} = payload;
+ 
+ 
+
+  
+  const user = await User.findOne({ email });
+
+  if (user) {
+    // throw new Error("Email already in use" );
+      return user;    
+  }
+  const result = await User.create(payload);
+  return result;
+
+ 
+  };
+
+
+  
  export const UserServices = {
-    registerUserIntoDB
+    registerUserIntoDB,
+    loginIntoDB
   }

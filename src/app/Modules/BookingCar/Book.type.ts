@@ -1,9 +1,9 @@
 
 
   export type TBookingCar = {
-    
-    email: string;
+    ownerEmail: string;
     carNumber: string;     //registration Number
+    userEmail: string;
     pickUpLocation: string;
     dropOffLocation: string;
     pickUpDate?: Date;
@@ -11,6 +11,6 @@
     RentalDuration: number;
     totalCost: number;
     seats: number;
-    status: 'Pending' |'Confirmed' | 'Canceled' | 'Completed';
+    status: 'Pending' |'Canceled' | 'Approved';
    
   }
