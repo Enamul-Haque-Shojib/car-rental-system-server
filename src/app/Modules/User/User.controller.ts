@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import { generateToken } from "../../utils/generateToken";
-import { User } from "./User.model";
+
 import { UserServices } from "./User.service";
 
  const registerUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -25,37 +25,30 @@ import { UserServices } from "./User.service";
 
 
 export const login = async (req: Request, res: Response,next: NextFunction) => {
+
+ 
   try {
-    const { email, name, photoUrl } = req.body;
 
-    if (!email) return res.status(400).json({ message: "Email is required" });
-
+    const result = await UserServices.loginIntoDB(req.body);
+  
     
-    let user = await User.findOne({ email });
+    const jwtToken =  generateToken(result._id.toString(),result.email,result.role);
 
-    if (!user) {
-      user = await User.create({
-        name: name ,
-        email,
-        photoURL: photoUrl ,
-      });
-    }
 
-    
-    const jwtToken = generateToken(user._id.toString(),user.email,user.role);
 
     // Set JWT  cookie
     res.cookie("Token", jwtToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      // secure: process.env.NODE_ENV === "production",
+      secure: false,
       sameSite:process.env.NODE_ENV === 'production' ? 'none' : 'strict',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    res.json({ message: "Login successful", user });
+    res.json({ message: "Login successful" });
   } catch (error) {
     next(error)
-    res.status(500).send({ message: "Server error",  });
+    // res.status(500).send({ message: "Server error",  });
   }
 };
 
