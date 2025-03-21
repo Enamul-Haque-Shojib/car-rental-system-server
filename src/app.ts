@@ -6,6 +6,8 @@ import cors from 'cors';
 import { UserRoutes } from './app/Modules/User/User.route';
 import cookieParser from 'cookie-parser';
 import { CarRoutes } from './app/Modules/Car/Car.routes';
+import globalErrorHandler from './app/middlewares/globalErrorhandler';
+import notFound from './app/middlewares/notFound';
 
 const app: Application = express();
 
@@ -25,6 +27,8 @@ app.get("/", (req, res) => {
   });
 
 
+app.use(globalErrorHandler);
+app.use(notFound);
 
 
 export default app;

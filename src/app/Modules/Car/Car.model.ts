@@ -33,7 +33,7 @@ const carSchema = new Schema<TCar>({
   email: { 
     type: String, 
     required: true, 
-    unique: true 
+  
   },
   brand: { 
     type: String, 
