@@ -45,7 +45,7 @@ export const login = async (req: Request, res: Response,next: NextFunction) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    res.json({ message: "Login successful" });
+    res.json({data:result, message: "Login successful" });
   } catch (error) {
     next(error)
     // res.status(500).send({ message: "Server error",  });
@@ -59,7 +59,57 @@ export const logoutUser = (req: Request, res: Response) => {
 };
 
 
+ const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
+
+  try {
+    
+    const result = await UserServices.getAllUsersIntoDB();
+
+    res.status(200).json({
+      success: true,
+      message: "All Users retrieve successfully.",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+ const getOneUser = async (req: Request, res: Response, next: NextFunction) => {
+
+  try {
+    
+    const result = await UserServices.getOneUserIntoDB(req.params.id);
+
+
+    res.status(200).json({
+      success: true,
+      message: "All Users retrieve successfully.",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+ console.log(req.params.id, req.body)
+  try {
+    
+    const result = await UserServices.updateUserIntoDB(req.params.id, req.body);
+
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully.",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 export const UserController = {
   registerUser,
-  
+  getAllUsers,
+  updateUser,
+  getOneUser
 }

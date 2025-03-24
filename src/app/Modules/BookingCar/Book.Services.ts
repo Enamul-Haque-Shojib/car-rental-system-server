@@ -1,3 +1,4 @@
+import { sendEmail } from "../../utils/sendEmail";
 import { Car } from "../Car/Car.model";
 import { BookingCar } from "./Book.model";
 import { TBookingCar } from "./Book.type";
@@ -9,14 +10,14 @@ const addBookingCarIntoDB = async (payload: TBookingCar) => {
     return result;
 };
 
-const approvedBookingCarIntoDB = async (id: string, payload: {registrationNumber: string}) => {
+const approvedBookingCarIntoDB = async (id: string, payload: {carId: string}) => {
     
-   
+
     const updatedBookingCar = await BookingCar.findByIdAndUpdate(
         id,
         { status: 'Approved' },
         { new: true }
-    );
+    ).populate<{ userId: { email: string } }>('userId', 'email');
    
     if (!updatedBookingCar) {
         throw new Error("Booking Car not found or unable to update status.");
@@ -24,7 +25,7 @@ const approvedBookingCarIntoDB = async (id: string, payload: {registrationNumber
    
 
     const updatedCar = await Car.findOneAndUpdate(
-        { registrationNumber: payload.registrationNumber },
+        { _id: payload.carId },
         { availability: false },
         { new: true }
     );
@@ -32,6 +33,29 @@ const approvedBookingCarIntoDB = async (id: string, payload: {registrationNumber
     if (!updatedCar) {
         throw new Error("Car not found or unable to update availability.");
     }
+
+    
+    if (!updatedBookingCar?.userId || typeof updatedBookingCar.userId === 'string') {
+        throw new Error("User not found or email not available.");
+    } 
+    sendEmail(updatedBookingCar.userId.email, 'Approved your rental request' ,"Have a nice drive with your rental car");
+
+
+    return null;
+};
+const canceledBookingCarIntoDB = async (id: string) => {
+    
+   
+    const updatedBookingCar = await BookingCar.findByIdAndUpdate(
+        id,
+        { status: 'Canceled' },
+        { new: true }
+    );
+   
+    if (!updatedBookingCar) {
+        throw new Error("Booking Car not found or unable to update status.");
+    }
+   
     return null;
 };
 
@@ -43,9 +67,15 @@ const result = await BookingCar.findByIdAndUpdate(id, payload,{new: true});
 
 };
 
-const getAllBookingCarsIntoDB = async (email: string) => {
+const getAllOwnerBookingCarsIntoDB = async (id: string) => {
   
-const result = await BookingCar.find({email});
+const result = await BookingCar.find({ownerId: id}).populate('carId').populate('userId');
+    return result;
+
+};
+const getAllUserBookingCarsIntoDB = async (id: string) => {
+  
+const result = await BookingCar.find({userId: id}).populate('carId').populate('ownerId');
     return result;
 
 };
@@ -62,7 +92,8 @@ const result = await BookingCar.findByIdAndDelete(id);
     addBookingCarIntoDB,
     approvedBookingCarIntoDB,
     updateBookingCarIntoDB,
-    getAllBookingCarsIntoDB,
-
+    getAllOwnerBookingCarsIntoDB,
+    getAllUserBookingCarsIntoDB,
+    canceledBookingCarIntoDB,
     deleteBookingCarIntoDB
   }

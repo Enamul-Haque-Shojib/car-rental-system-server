@@ -7,7 +7,7 @@ import { BookingServices } from "./Book.Services";
   
   try {
     
-    const result = await BookingServices.approvedBookingCarIntoDB(req.params.id, req.body);
+    const result = await BookingServices.addBookingCarIntoDB(req.body);
 
     res.status(200).json({
       success: true,
@@ -19,14 +19,29 @@ import { BookingServices } from "./Book.Services";
   }
 };
  const approvedBookingCar = async (req: Request, res: Response, next: NextFunction) => {
-  
+
   try {
     
     const result = await BookingServices.approvedBookingCarIntoDB(req.params.id, req.body);
 
     res.status(200).json({
       success: true,
-      message: "Car Book approved successfully.",
+      message: "Car Book approved successfully. Sending Confirmation email, Please check your email",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+ const canceledBookingCar = async (req: Request, res: Response, next: NextFunction) => {
+  
+  try {
+    
+    const result = await BookingServices.canceledBookingCarIntoDB(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "Car Book canceled successfully.",
       data: result,
     });
   } catch (error) {
@@ -48,15 +63,30 @@ import { BookingServices } from "./Book.Services";
     next(error);
   }
 };
- const getAllBookingCars = async (req: Request, res: Response, next: NextFunction) => {
+ const getAllUserBookingCars = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
     
-    const result = await BookingServices.getAllBookingCarsIntoDB(req.params.email);
+    const result = await BookingServices.getAllUserBookingCarsIntoDB(req.params.id);
 
     res.status(200).json({
       success: true,
-      message: "All Booked Cars retrieve successfully.",
+      message: "All User Booked Cars retrieve successfully.",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+ const getAllOwnerBookingCars = async (req: Request, res: Response, next: NextFunction) => {
+
+  try {
+    
+    const result = await BookingServices.getAllOwnerBookingCarsIntoDB(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "All User Booked Cars retrieve successfully.",
       data: result,
     });
   } catch (error) {
@@ -86,6 +116,8 @@ export const BookingControllers = {
   addBookingCar,
   approvedBookingCar,
     updateBookingCar,
-    getAllBookingCars,
-    deleteBookingCar
+    getAllOwnerBookingCars,
+    getAllUserBookingCars,
+    deleteBookingCar,
+    canceledBookingCar
 }
