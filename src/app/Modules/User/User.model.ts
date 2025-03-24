@@ -8,9 +8,22 @@ const userSchema = new Schema<TUser>({
     default: ''
    },
   email: { type: String, required: true, unique: true },
+  role:{
+    type: String,
+    enum:['admin', 'user'],
+    default: 'user'
+  }
 },
 {
-  timestamps:true
+  timestamps:true,
+  toJSON: {
+    transform: (doc, ret) => {
+     
+      delete ret.createdAt; 
+      delete ret.updatedAt; 
+      return ret;
+    },
+  },
 });
 
 export const User = model<TUser>('User', userSchema);

@@ -1,4 +1,22 @@
+import { Types } from "mongoose";
 
+  
+
+  export type TReview = {
+   userId: Types.ObjectId,
+    feedback: string;
+    reviewDate: Date;
+    rating: number;
+  };
+  
+  export type TCarReview = {
+    carRegisterNumber: string;
+    reviews: TReview[];
+  };
+  
+  
+  
+  
   export type TFetures = {
     airConditioner: boolean;
     gps: boolean;
@@ -10,7 +28,7 @@
 
 
   export type TCar = {
-    email: string;
+    userId: Types.ObjectId;
     brand: string;
     carModel: string;
     year: number;
