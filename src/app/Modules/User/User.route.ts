@@ -12,7 +12,12 @@ router.post("/login", async (req, res, next) => {
       next(error); 
     }
   });
-  router.post("/logout",logoutUser)
+  router.post("/logout",logoutUser);
+
+  router.patch("/update-user/:id",UserController.updateUser);
+  router.get("/one-user/:id",UserController.getOneUser);
+  router.get("/",UserController.getAllUsers);
+
 
 
 export const UserRoutes = router;

@@ -5,18 +5,21 @@ import { TBookingCar } from './Book.type';
 
 const bookingCarSchema = new Schema<TBookingCar>({
   
-  userEmail: { 
-    type:  String, 
+  userId: { 
+    type:  Schema.Types.ObjectId, 
     required: true, 
+    ref: 'User'
   },
-  ownerEmail: { 
-    type:  String, 
+  ownerId: { 
+    type:  Schema.Types.ObjectId, 
     required: true, 
+     ref: 'User'
   },
 
-  carNumber: { 
-    type: String,
+  carId: { 
+    type: Schema.Types.ObjectId,
     required: true,
+     ref: 'Car'
    },
    
    pickUpLocation: { 
@@ -28,25 +31,19 @@ const bookingCarSchema = new Schema<TBookingCar>({
     required: true
    },
    pickUpDate: { 
-    type: Date, 
-    default: new Date()
+    type: String, 
+    required: true
    },
    dropOffDate: { 
     type: String, 
     required: true
    },
-   RentalDuration: { 
-    type: Number, 
-    required: true
-   },
+   
    totalCost: { 
     type: Number, 
     required: true
    },
-   seats: { 
-    type: Number, 
-    required: true
-   },
+ 
    status: { 
     type: String, 
     enum: ['Pending' ,'Canceled' , 'Approved'],

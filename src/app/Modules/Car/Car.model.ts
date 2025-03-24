@@ -1,5 +1,42 @@
-import { model, Schema } from 'mongoose';
-import { TCar, TFetures } from './Car.type';
+import { model, Schema} from 'mongoose';
+import { TCar, TCarReview, TFetures, TReview } from './Car.type';
+
+
+
+const reviewSchema = new Schema<TReview>({
+  userId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  },
+  feedback: {
+    type: String,
+    required: true,
+  },
+  reviewDate: {
+    type: Date,
+    default: Date.now(),
+  },
+  rating: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+});
+
+const carReviewSchema = new Schema<TCarReview>({
+  carRegisterNumber: {
+    type: String,
+    required: true,
+  },
+
+  reviews: [reviewSchema],
+});
+
+
+
+
+
 
 
 const featuresSchema = new Schema<TFetures>({
@@ -30,10 +67,10 @@ const featuresSchema = new Schema<TFetures>({
 },{ _id: false })
 
 const carSchema = new Schema<TCar>({
-  email: { 
-    type: String, 
+  userId: { 
+    type: Schema.Types.ObjectId, 
     required: true, 
-  
+  ref: 'User'
   },
   brand: { 
     type: String, 
@@ -77,7 +114,8 @@ const carSchema = new Schema<TCar>({
    },
    availability: { 
     type: Boolean, 
-    required: true
+    required: true,
+  
    },
    features: { 
     type: featuresSchema, 
@@ -103,5 +141,9 @@ const carSchema = new Schema<TCar>({
 });
 
 export const Car = model<TCar>('Car', carSchema);
+export const CarReview = model<TCarReview>(
+  'Car Review',
+  carReviewSchema,
+);
 
 

@@ -1,16 +1,16 @@
+import { Types } from "mongoose";
+import { TUser } from "../User/User.type";
 
 
   export type TBookingCar = {
-    ownerEmail: string;
-    carNumber: string;     //registration Number
-    userEmail: string;
+    ownerId: Types.ObjectId | TUser;
+    carId: Types.ObjectId;     //registration Number
+    userId: Types.ObjectId;
     pickUpLocation: string;
     dropOffLocation: string;
-    pickUpDate?: Date;
+    pickUpDate: string;
     dropOffDate: string;
-    RentalDuration: number;
     totalCost: number;
-    seats: number;
     status: 'Pending' |'Canceled' | 'Approved';
    
   }
