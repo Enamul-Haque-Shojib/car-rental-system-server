@@ -1,5 +1,39 @@
 import { model, Schema } from 'mongoose';
-import { TUser } from './User.type';
+import { TReview, TUser, TUserReview } from './User.type';
+
+
+const reviewSchema = new Schema<TReview>({
+  userId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  },
+  
+  feedback: {
+    type: String,
+    required: true,
+  },
+  reviewDate: {
+    type: Date,
+    default: Date.now(),
+  },
+  rating: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+});
+
+const userReviewSchema = new Schema<TUserReview>({
+  carId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Car'
+  },
+
+  reviews: [reviewSchema],
+});
+
 
 const userSchema = new Schema<TUser>({
   name: { type: String, required: true },
@@ -26,4 +60,9 @@ const userSchema = new Schema<TUser>({
   },
 });
 
+
 export const User = model<TUser>('User', userSchema);
+export const UserReviewModel = model<TUserReview>(
+  'User Review',
+  userReviewSchema,
+);

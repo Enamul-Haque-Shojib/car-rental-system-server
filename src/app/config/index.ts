@@ -7,5 +7,7 @@ export default {
   NODE_ENV: process.env.NODE_ENV,
   port: process.env.PORT,
   database_url: process.env.DATABASE_URL,
-  jwt_secret:process.env.JWT_SECRET
+  jwt_secret:process.env.JWT_SECRET,
+  email_user:process.env.EMAIL_USER,
+  email_pass:process.env.EMAIL_PASS
 };

@@ -68,7 +68,7 @@ const result = await BookingCar.findByIdAndUpdate(id, payload,{new: true});
 };
 
 const getAllOwnerBookingCarsIntoDB = async (id: string) => {
-  
+  console.log(id);
 const result = await BookingCar.find({ownerId: id}).populate('carId').populate('userId');
     return result;
 
