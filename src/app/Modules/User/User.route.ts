@@ -5,13 +5,15 @@ import {   login, logoutUser, UserController } from "./User.controller";
 const router = express.Router();
 
 router.post("/register/:email", UserController.registerUser); 
-router.post("/login", async (req, res, next) => {
-    try {
-      await login(req, res, next); 
-    } catch (error) {
-      next(error); 
-    }
-  });
+// router.post("/login", async (req, res, next) => {
+//     try {
+//       await login(req, res, next); 
+//     } catch (error) {
+//       next(error); 
+//     }
+//   });
+
+  router.post("/login",login);
   router.post("/logout",logoutUser);
 
   router.patch("/update-user/:id",UserController.updateUser);
