@@ -1,5 +1,5 @@
-import { User } from "./User.model";
-import { TUser } from "./User.type";
+import { User, UserReviewModel } from "./User.model";
+import { TUser, TUserReview } from "./User.type";
 
 
 const registerUserIntoDB = async (email: string, payload: TUser) => {
@@ -65,10 +65,57 @@ const loginIntoDB = async (payload: TUser) => {
   
   };
 
+
+
+
+  const addUserReviewIntoDB = async (
+    carId: string,
+    payload: TUserReview,
+  ) => {
+    const userReview = await UserReviewModel.findOneAndUpdate(
+      { carId },
+      { $push: { reviews: payload } },
+      { new: true, upsert: true },
+    );
+  
+    if (!userReview) {
+      throw new Error('Could not added the review');
+    }
+    return userReview;
+  };
+  
+  const getAllCarReviewsFromDB = async () => {
+    const result = await UserReviewModel.find().populate('carId').populate('reviews.userId');
+    return result;
+  };
+  const getSingleCarReviewsFromDB = async (carId: string) => {
+    const reviewsData = await UserReviewModel.findOne(
+      { carId },
+      { reviews: 1 },
+    ).lean().populate('reviews.userId');
+  
+    if (!reviewsData || !reviewsData.reviews) {
+      return [];
+    }
+  
+    const result = reviewsData.reviews.sort((a, b) => {
+      const dateA = a.rating;
+      const dateB = b.rating;
+      return dateB - dateA;
+    });
+
+    return result;
+  };
+
+
+
   export const UserServices = {
     registerUserIntoDB,
     loginIntoDB,
     getAllUsersIntoDB,
     updateUserIntoDB,
-    getOneUserIntoDB
+    getOneUserIntoDB,
+    addUserReviewIntoDB,
+    getAllCarReviewsFromDB,
+    getSingleCarReviewsFromDB
   }

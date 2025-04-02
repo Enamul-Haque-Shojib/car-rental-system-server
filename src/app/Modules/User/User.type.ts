@@ -1,3 +1,21 @@
+import { Types } from "mongoose";
+
+
+
+
+
+export type TReview = {
+  userId: Types.ObjectId;
+  feedback: string;
+  reviewDate: Date;
+  rating: number;
+};
+
+export type TUserReview = {
+  carId: Types.ObjectId;
+  reviews: TReview[];
+};
+
 
 
 

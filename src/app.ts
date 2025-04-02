@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 
 
@@ -12,7 +12,7 @@ import { BookingRoutes } from './app/Modules/BookingCar/Book.routes';
 
 const app: Application = express();
 
-app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
+app.use(cors({ origin: ["http://localhost:5173", "https://car-rentals-system.netlify.app"], credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 

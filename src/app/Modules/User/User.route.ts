@@ -18,6 +18,23 @@ router.post("/login", async (req, res, next) => {
   router.get("/one-user/:id",UserController.getOneUser);
   router.get("/",UserController.getAllUsers);
 
+  router.patch(
+    '/add-review/:id',
+
+    UserController.addUserReview,
+  );
+  router.get(
+    '/get-reviews/',
+
+    UserController.getAllCarReviews,
+  );
+  
+  router.get(
+    '/get-one-review/:id',
+
+    UserController.getSingleCarReviews,
+  );
+
 
 
 export const UserRoutes = router;
