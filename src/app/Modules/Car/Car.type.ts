@@ -33,6 +33,7 @@ import { Types } from "mongoose";
     carModel: string;
     year: string;
     type: string;
+    slugType: string;
     fuelType: string;
     seats: string;
     transmission: string;
