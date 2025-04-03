@@ -88,6 +88,10 @@ const carSchema = new Schema<TCar>({
     type: String, 
     required: true
    },
+   slugType: { 
+    type: String, 
+    required: true
+   },
    fuelType: { 
     type: String, 
     required: true
