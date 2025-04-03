@@ -26,7 +26,7 @@ router.post("/register/:email", UserController.registerUser);
     UserController.addUserReview,
   );
   router.get(
-    '/get-reviews/',
+    '/get-reviews',
 
     UserController.getAllCarReviews,
   );

@@ -36,7 +36,7 @@ import { CarServices } from "./Car.Services";
 
   try {
     
-    const result = await CarServices.getAllCarsIntoDB();
+    const result = await CarServices.getAllCarsIntoDB(req.query);
 
     res.status(200).json({
       success: true,
