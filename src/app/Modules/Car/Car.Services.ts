@@ -1,3 +1,5 @@
+import QueryBuilder from "../../builder/QueryBuilder";
+import { carSearchableFields } from "./Car.constant";
 import { Car, CarReview } from "./Car.model";
 import { TCar, TCarReview } from "./Car.type";
 
@@ -17,10 +19,29 @@ const result = await Car.findByIdAndUpdate(id, payload,{new: true});
 
 };
 
-const getAllCarsIntoDB = async () => {
+const getAllCarsIntoDB = async (query: Record<string, unknown>) => {
+console.log(query);
+  const carQuery = new QueryBuilder(
+    Car.find()
+    .populate('userId'),
+    query,
+  )
+    .search(carSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const meta = await carQuery.countTotal();
+  const result = await carQuery.modelQuery;
+
+  return {
+    meta,
+    result,
+  };
   
-const result = await Car.find().populate('userId');
-    return result;
+// const result = await Car.find().populate('userId');
+//     return result;
 
 };
 const getOneCarIntoDB = async (id: string) => {

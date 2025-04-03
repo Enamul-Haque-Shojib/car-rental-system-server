@@ -81,7 +81,7 @@ const carSchema = new Schema<TCar>({
     required: true
    },
    year: { 
-    type: Number, 
+    type: String, 
     required: true
    },
    type: { 
@@ -93,7 +93,7 @@ const carSchema = new Schema<TCar>({
     required: true
    },
    seats: { 
-    type: Number, 
+    type: String, 
     required: true
    },
    transmission: { 
@@ -101,11 +101,11 @@ const carSchema = new Schema<TCar>({
     required: true
    },
    mileAge: { 
-    type: Number, 
+    type: String, 
     required: true
    },
    pricePerDay: { 
-    type: Number, 
+    type: String, 
     required: true
    },
    location: { 
