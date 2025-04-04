@@ -1,5 +1,4 @@
 
-## Category: Lotus
 ### Car Rental System
 
 ## Website Name:
@@ -9,7 +8,6 @@
  <https://car-rentals-system.netlify.app/>
 ## Website server link:
  <https://car-rental-system-server-gray.vercel.app/>
-
 
  ## Features:
  - 
