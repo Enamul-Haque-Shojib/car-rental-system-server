@@ -16,4 +16,6 @@ router.get("/book-all-owner/:id", BookingControllers.getAllOwnerBookingCars);
 
 router.delete("/book-delete/:id", BookingControllers.deleteBookingCar); 
 
+router.post("/create-payment", BookingControllers.createPaymentBooking); 
+
 export const BookingRoutes = router;

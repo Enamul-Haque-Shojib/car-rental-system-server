@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { TUser } from "../User/User.type";
 
 
-  export type TBookingCar = {
+  export type TPayment = {
     ownerId: Types.ObjectId | TUser;
     carId: Types.ObjectId;     
     userId: Types.ObjectId;
@@ -11,6 +11,7 @@ import { TUser } from "../User/User.type";
     pickUpDate: string;
     dropOffDate: string;
     totalCost: number;
-    status: 'Pending' |'Canceled' | 'Approved';
+    status: 'Approved';
+    transactionId: string;
    
   }

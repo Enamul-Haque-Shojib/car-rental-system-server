@@ -32,11 +32,11 @@ import { CarServices } from "./Car.Services";
     next(error);
   }
 };
- const getAllCars = async (req: Request, res: Response, next: NextFunction) => {
+ const getAllQueryCars = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
     
-    const result = await CarServices.getAllCarsIntoDB();
+    const result = await CarServices.getAllQueryCarsIntoDB(req.query);
 
     res.status(200).json({
       success: true,
@@ -47,6 +47,24 @@ import { CarServices } from "./Car.Services";
     next(error);
   }
 };
+ const getAllCars = async (req: Request, res: Response, next: NextFunction) => {
+
+  try {
+    
+    const result = await CarServices.getAllCarsIntoDB(req.query);
+
+    res.status(200).json({
+      success: true,
+      message: "All Cars retrieve successfully.",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
  const getOneCar = async (req: Request, res: Response, next: NextFunction) => {
   
   try {
@@ -144,6 +162,7 @@ const getSingleCarReviews = async (req: Request, res: Response, next: NextFuncti
 export const CarControllers = {
     addCar,
     updateCar,
+    getAllQueryCars,
     getAllCars,
     getOneCar,
     deleteCar,
