@@ -1,8 +1,11 @@
+import config from "../../config";
 import { sendEmail } from "../../utils/sendEmail";
 import { Car } from "../Car/Car.model";
 import { BookingCar } from "./Book.model";
 import { TBookingCar } from "./Book.type";
 
+import Stripe from 'stripe';
+const stripe = new Stripe(config.payment_secret_key as string);
 
 const addBookingCarIntoDB = async (payload: TBookingCar) => {
 
@@ -68,7 +71,7 @@ const result = await BookingCar.findByIdAndUpdate(id, payload,{new: true});
 };
 
 const getAllOwnerBookingCarsIntoDB = async (id: string) => {
-  console.log(id);
+
 const result = await BookingCar.find({ownerId: id}).populate('carId').populate('userId');
     return result;
 
@@ -88,6 +91,39 @@ const result = await BookingCar.findByIdAndDelete(id);
 
 };
 
+
+
+
+const createPaymentBookingIntoStripe = async (payload: { id: string }) => {
+    const bookingData = await BookingCar.findById(payload.id);
+    if (!bookingData) {
+        throw new Error('Booking car not found');
+    }
+
+    const totalCostBooking = bookingData.totalCost * 100;
+
+    const paymentIntent = await stripe.paymentIntents.create({
+        amount: totalCostBooking,
+        currency: 'usd',  
+        description: `Car rental booking for ${bookingData.carId}`,  // ✅ Required for Indian transactions
+        automatic_payment_methods: { enabled: true },
+        shipping: {   // ✅ Required for Indian transactions
+            name:  'Unknown User',
+            address: {
+                line1: '123 Default St',
+                city:  'Default City',
+                state: 'Default State',
+                postal_code:  '000000',
+                country: 'IN',  // Change to the user's actual country
+            }
+        }
+    });
+
+    return { clientSecret: paymentIntent.client_secret };
+};
+
+
+
  export const BookingServices = {
     addBookingCarIntoDB,
     approvedBookingCarIntoDB,
@@ -95,5 +131,6 @@ const result = await BookingCar.findByIdAndDelete(id);
     getAllOwnerBookingCarsIntoDB,
     getAllUserBookingCarsIntoDB,
     canceledBookingCarIntoDB,
-    deleteBookingCarIntoDB
+    deleteBookingCarIntoDB,
+    createPaymentBookingIntoStripe
   }

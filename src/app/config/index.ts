@@ -9,5 +9,6 @@ export default {
   database_url: process.env.DATABASE_URL,
   jwt_secret:process.env.JWT_SECRET,
   email_user:process.env.EMAIL_USER,
-  email_pass:process.env.EMAIL_PASS
+  email_pass:process.env.EMAIL_PASS,
+  payment_secret_key:process.env.PAYMENT_SECRET_KEY,
 };
