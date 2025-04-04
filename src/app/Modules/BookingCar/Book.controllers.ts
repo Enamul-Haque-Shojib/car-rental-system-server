@@ -109,6 +109,21 @@ import { BookingServices } from "./Book.Services";
     next(error);
   }
 };
+ const createPaymentBooking = async (req: Request, res: Response, next: NextFunction) => {
+  
+  try {
+   
+    const result = await BookingServices.createPaymentBookingIntoStripe(req.body);
+
+    res.status(200).json({
+      success: true,
+      message: "Booking payment successfully.",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 
 
@@ -119,5 +134,6 @@ export const BookingControllers = {
     getAllOwnerBookingCars,
     getAllUserBookingCars,
     deleteBookingCar,
-    canceledBookingCar
+    canceledBookingCar,
+    createPaymentBooking
 }
