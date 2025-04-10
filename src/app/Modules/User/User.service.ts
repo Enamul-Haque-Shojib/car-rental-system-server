@@ -1,3 +1,4 @@
+import QueryBuilder from "../../builder/QueryBuilder";
 import { User, UserReviewModel } from "./User.model";
 import { TUser, TUserReview } from "./User.type";
 
@@ -45,10 +46,27 @@ const loginIntoDB = async (payload: TUser) => {
 
 
 
-  const getAllUsersIntoDB = async () => {
+  const getAllUsersIntoDB = async (query: Record<string, unknown>) => {
+
+    const userQuery = new QueryBuilder(
+      User.find(),
+      query,
+    )
+      .search(['name', 'email', 'role'])
+      .filter()
+      .sort()
+      .paginate()
+      .fields();
+  
+    const meta = await userQuery.countTotal();
+    const result = await userQuery.modelQuery;
+  
+    return {
+      meta,
+      result,
+    };
     
-  const result = await User.find();
-      return result;
+
   
   };
   const getOneUserIntoDB = async (id: string) => {

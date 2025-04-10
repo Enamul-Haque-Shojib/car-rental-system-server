@@ -116,8 +116,9 @@ const carSchema = new Schema<TCar>({
     type: String, 
     required: true
    },
-   availability: { 
-    type: Boolean, 
+   status: { 
+    type: String,
+    enum:['not_rent', 'rent', 'disable'], 
     required: true,
   
    },

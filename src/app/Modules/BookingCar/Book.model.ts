@@ -49,6 +49,12 @@ const bookingCarSchema = new Schema<TBookingCar>({
     enum: ['Pending' ,'Canceled' , 'Approved'],
     required: true,
     default: "Pending"
+   },
+   payment_status: { 
+    type: String, 
+    enum: ['pending_payment' ,'canceled_payment' , 'approved_payment'],
+    required: true,
+    default: "pending_payment"
    }
 },
 {
