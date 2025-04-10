@@ -10,6 +10,7 @@ import globalErrorHandler from './app/middlewares/globalErrorhandler';
 import notFound from './app/middlewares/notFound';
 import { BookingRoutes } from './app/Modules/BookingCar/Book.routes';
 import { paymentRoutes } from './app/Modules/Payment/Payment.routes';
+import { StatisticsRoutes } from './app/Modules/Statistics/Statistics.routes';
 
 const app: Application = express();
 
@@ -23,6 +24,7 @@ app.use('/api/auth', UserRoutes);
 app.use('/api/cars', CarRoutes);
 app.use('/api/bookings', BookingRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/statistics', StatisticsRoutes);
 
 
 

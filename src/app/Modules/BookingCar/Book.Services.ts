@@ -18,7 +18,7 @@ const approvedBookingCarIntoDB = async (id: string, payload: {carId: string}) =>
 
     const updatedBookingCar = await BookingCar.findByIdAndUpdate(
         id,
-        { status: 'Approved' },
+        { status: 'Approved', payment_status: 'approved_payment' },
         { new: true }
     ).populate<{ userId: { email: string } }>('userId', 'email');
    
@@ -29,7 +29,7 @@ const approvedBookingCarIntoDB = async (id: string, payload: {carId: string}) =>
 
     const updatedCar = await Car.findOneAndUpdate(
         { _id: payload.carId },
-        { availability: false },
+        { status: 'rent' },
         { new: true }
     );
 
@@ -51,7 +51,22 @@ const canceledBookingCarIntoDB = async (id: string) => {
    
     const updatedBookingCar = await BookingCar.findByIdAndUpdate(
         id,
-        { status: 'Canceled' },
+        { status: 'Canceled', payment_status: 'canceled_payment'},
+        { new: true }
+    );
+   
+    if (!updatedBookingCar) {
+        throw new Error("Booking Car not found or unable to update status.");
+    }
+   
+    return null;
+};
+const completeBookingCarIntoDB = async (id: string) => {
+    
+   
+    const updatedBookingCar = await BookingCar.findByIdAndUpdate(
+        id,
+        { status: 'Completed', payment_status: 'completed_payment'},
         { new: true }
     );
    
@@ -132,5 +147,6 @@ const createPaymentBookingIntoStripe = async (payload: { id: string }) => {
     getAllUserBookingCarsIntoDB,
     canceledBookingCarIntoDB,
     deleteBookingCarIntoDB,
-    createPaymentBookingIntoStripe
+    createPaymentBookingIntoStripe,
+    completeBookingCarIntoDB
   }

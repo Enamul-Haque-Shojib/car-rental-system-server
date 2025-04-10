@@ -40,7 +40,7 @@ import { Types } from "mongoose";
     mileAge: string;
     pricePerDay: string;
     location: string;
-    availability: boolean;
+    status: 'not_rent'|'rent'|'disable';
     features: TFetures;
     image: string; 
     description: string;

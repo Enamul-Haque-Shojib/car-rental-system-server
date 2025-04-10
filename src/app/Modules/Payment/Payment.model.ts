@@ -45,11 +45,6 @@ const paymentSchema = new Schema<TPayment>({
     required: true
    },
  
-   status: { 
-    type: String, 
-    enum: ['Approved'],
-    required: true,
-   },
    transactionId:{
     type: String, 
     required: true

@@ -48,6 +48,21 @@ import { BookingServices } from "./Book.Services";
     next(error);
   }
 };
+ const completeBookingCar = async (req: Request, res: Response, next: NextFunction) => {
+  
+  try {
+    
+    const result = await BookingServices.completeBookingCarIntoDB(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "Car Book canceled successfully.",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
  const updateBookingCar = async (req: Request, res: Response, next: NextFunction) => {
   
   try {
@@ -135,5 +150,6 @@ export const BookingControllers = {
     getAllUserBookingCars,
     deleteBookingCar,
     canceledBookingCar,
-    createPaymentBooking
+    createPaymentBooking,
+    completeBookingCar
 }

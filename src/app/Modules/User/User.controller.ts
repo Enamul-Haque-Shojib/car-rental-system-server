@@ -63,7 +63,7 @@ export const logoutUser = (req: Request, res: Response) => {
 
   try {
     
-    const result = await UserServices.getAllUsersIntoDB();
+    const result = await UserServices.getAllUsersIntoDB(req.query);
 
     res.status(200).json({
       success: true,
