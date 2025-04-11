@@ -37,6 +37,21 @@ import { PaymentServices } from "./Payment.Services";
     next(error);
   }
 };
+ const getAllUserPayments = async (req: Request, res: Response, next: NextFunction) => {
+
+  try {
+    
+    const result = await PaymentServices.getAllUserPaymentsIntoDB(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "All User Payment retrieve successfully.",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
  const deletePayment = async (req: Request, res: Response, next: NextFunction) => {
   
@@ -59,5 +74,6 @@ import { PaymentServices } from "./Payment.Services";
 export const PaymentControllers = {
   addPayment,
   getAllOwnerPayments,
+  getAllUserPayments,
   deletePayment
 }

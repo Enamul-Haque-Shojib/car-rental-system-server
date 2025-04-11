@@ -11,6 +11,7 @@ import { TUser } from "../User/User.type";
     pickUpDate: string;
     dropOffDate: string;
     totalCost: number;
-    status: 'Pending' |'Canceled' | 'Approved';
+    status: 'Pending' |'Canceled' | 'Approved' | 'Completed';
+    payment_status: 'pending_payment' |'canceled_payment' | 'approved_payment';
    
   }

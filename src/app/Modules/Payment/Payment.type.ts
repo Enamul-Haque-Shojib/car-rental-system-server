@@ -11,7 +11,6 @@ import { TUser } from "../User/User.type";
     pickUpDate: string;
     dropOffDate: string;
     totalCost: number;
-    status: 'Approved';
     transactionId: string;
    
   }
