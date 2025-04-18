@@ -1,7 +1,15 @@
 import { model, Schema } from 'mongoose';
-import { TBookingCar } from './Book.type';
+import { TBookingCar, TCoords } from './Book.type';
 
 
+const coordsSchema = new Schema<TCoords>({
+  lat: {
+    type: Number
+  },
+  lng: {
+    type: Number
+  }
+})
 
 const bookingCarSchema = new Schema<TBookingCar>({
   
@@ -28,6 +36,14 @@ const bookingCarSchema = new Schema<TBookingCar>({
    },
    dropOffLocation: { 
     type: String, 
+    required: true
+   },
+   pickUpCoord: { 
+    type: coordsSchema, 
+    required: true
+   },
+   dropOffCoord: { 
+    type: coordsSchema, 
     required: true
    },
    pickUpDate: { 
