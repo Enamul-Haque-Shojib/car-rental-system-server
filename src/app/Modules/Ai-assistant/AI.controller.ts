@@ -30,7 +30,7 @@ import { Car } from '../Car/Car.model';
 
             status: car.status,
             features: car.features,     
-            link: `http://localhost:5173/detailsCar/${car._id}`,
+            link: `https://car-rental-system-server-gray.vercel.app/detailsCar/${car._id}`,
         }));
 
         // Construct the AI prompt
@@ -47,7 +47,7 @@ import { Car } from '../Car/Car.model';
               "pricePerDay": "1800",
               "location": "Dhaka",
               image:"https://res.cloudinary.com/dqsm6ybdu/image/upload/v1742859610/f88efylheeycdlvhisjj.jpg"
-              "link": "http://localhost:5173/detailsCar/carId123"
+              "link": "https://car-rental-system-server-gray.vercel.app/detailsCar/carId123"
             }
           ]
         }
