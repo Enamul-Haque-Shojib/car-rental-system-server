@@ -5,6 +5,8 @@ import { Car } from '../Car/Car.model';
  const aiAssistantController = async(req: Request, res: Response, next: NextFunction):Promise<void> => {
     const { message } = req.body;
 
+  
+
 
     try {
         // Fetch all available cars from the database
