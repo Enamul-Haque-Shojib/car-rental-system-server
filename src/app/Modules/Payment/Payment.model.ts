@@ -4,6 +4,7 @@ import { TPayment } from './Payment.type';
 
 
 
+
 const paymentSchema = new Schema<TPayment>({
   
   userId: { 
@@ -48,6 +49,17 @@ const paymentSchema = new Schema<TPayment>({
    transactionId:{
     type: String, 
     required: true
+   },
+   status:{
+    type:String,
+    enum:['paid','refunded'],
+    required:true
+   },
+   reason:{
+    type:String,
+   },
+   refundedAt:{
+    type:Date
    }
 },
 {

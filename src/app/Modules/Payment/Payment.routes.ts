@@ -9,6 +9,7 @@ import { PaymentControllers } from "./Payment.controllers";
 const router = express.Router();
 
 router.post("/payment-add", PaymentControllers.addPayment); 
+router.post("/refund", PaymentControllers.refundPayment); 
    
 router.get("/payment-all-owner/:id", PaymentControllers.getAllOwnerPayments); 
 router.get("/payment-all-user/:id", PaymentControllers.getAllUserPayments); 
