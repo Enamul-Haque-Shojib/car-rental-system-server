@@ -15,7 +15,7 @@ import { UserRoutes } from './app/Modules/User/User.route';
 
 const app: Application = express();
 
-app.use(cors({ origin: ["http://localhost:5173", "https://car-rentals-system.netlify.app"], credentials: true }));
+app.use(cors({ origin: ["http://localhost:5173", "https://car-rentals-system.netlify.app","https://openrouter.ai/api/v1/chat/completions"], credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 

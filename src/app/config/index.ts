@@ -11,4 +11,5 @@ export default {
   email_user:process.env.EMAIL_USER,
   email_pass:process.env.EMAIL_PASS,
   payment_secret_key:process.env.PAYMENT_SECRET_KEY,
+  OPENROUTER_API_KEY:process.env.OPENROUTER_API_KEY
 };
