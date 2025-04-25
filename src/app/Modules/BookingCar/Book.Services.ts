@@ -5,7 +5,7 @@ import { BookingCar } from "./Book.model";
 import { TBookingCar } from "./Book.type";
 
 import Stripe from 'stripe';
-const stripe = new Stripe(config.payment_secret_key as string);
+export const stripe = new Stripe(config.payment_secret_key as string);
 
 const addBookingCarIntoDB = async (payload: TBookingCar) => {
 
